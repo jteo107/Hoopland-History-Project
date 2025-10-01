@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    a:link,a:visited {
+        background-color: #279CF5;
+        color: white;
+        margin-top: 10px;
+        padding: 14px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+    a:hover, a:active {
+        background-color: #276CF5;
+        color: white;
+    }
+</style>
+</head>
+    <body>
+        <h1>Welcome to Hoopland Beyond!</h1>
+        <p>Hoopland Beyond is an expansion tool to dive deeper into the statistics of your Hoopland save files.</p>
+        <h1>Upload CSV File</h1>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload</button>
+        </form>
+
+
+    </body>
+</html>
