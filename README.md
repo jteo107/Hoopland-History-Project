@@ -1,0 +1,1 @@
+This is a passion project based on koalitygame's mobile game Hoopland, using Pandas, SQLALCHEMY, MatPlotLib, and SciKit-Learn libraries to conduct statistical analysis of players within the hoopland video game and enhance the overall experience of dedicated players and fans.
