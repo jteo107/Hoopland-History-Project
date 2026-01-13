@@ -118,11 +118,11 @@ def season_plot_design(dataframe,additional_criteria,plot_type, x, y, num_cluste
     teams = []
     rookie_only = False
     if(additional_criteria['Position'] != None):
-        for pos in additional_criteria['position']:
+        for pos in additional_criteria['Position']:
             if pos not in positions:
                 positions.append(pos)
     if(additional_criteria['Team'] != None):
-        for team in additional_criteria['team']:
+        for team in additional_criteria['Team']:
             if team not in teams:
                 teams.append(team)
     if(additional_criteria['Rookie'] == True):
@@ -134,14 +134,38 @@ def season_plot_design(dataframe,additional_criteria,plot_type, x, y, num_cluste
 
 def kmeans_season_plot(dataframe, positions, rookie_only,num_clusters):
     df = dataframe.copy()
+    df = df[(df['GP'] > 0) & (df['MIN'] > 0)]
     if(len(positions) > 0):
         df = df[df['Position'].isin(positions)]
     if(rookie_only):
         df = df[df['Year'] == 'R']
     if(df.empty):
         return None
-    non_numeric_columns = ['Player Name', 'Team', 'Position', 'Year']
-    numeric_df = df.drop(columns = non_numeric_columns)
+    key_stats = [
+        'GP',
+        'GS',
+        'MIN',
+        'PTS',
+        'FGM',
+        'FGA',
+        '3PM',
+        '3PA',
+        'FTM',
+        'FTA',
+        'REB',
+        'OREB',
+        'AST',
+        'STL',
+        'BLK',
+        'PF',
+        'TO',
+        '+/-',
+        'PER',
+        'TS%',
+        'EFG%'
+    ]
+    numeric_df = df[key_stats]
+    numeric_df = numeric_df.loc[:, numeric_df.std() > 0]
     scaler = StandardScaler()
     scaled_data = scaler.fit_transform(numeric_df)
 
@@ -151,8 +175,8 @@ def kmeans_season_plot(dataframe, positions, rookie_only,num_clusters):
     df['Cluster'] = clusters
     for i in sorted(df['Cluster'].unique()):
         print(f"Cluster {i}:")
-        members = df[df['Cluster'] == i]['Player Name'].tolist()
-        print(members.tolist())
+        members = df[df['Cluster'] == i]['Name'].tolist()
+        print(members)
     pca = PCA(n_components=2)
     pca_data = pca.fit_transform(scaled_data)
     
@@ -163,7 +187,7 @@ def kmeans_season_plot(dataframe, positions, rookie_only,num_clusters):
     sns.scatterplot(data=df, x='PCA1', y='PCA2', hue='Cluster', palette='Set2')
     
     for i, row in df.iterrows():
-        plt.text(row['PCA1']+0.02, row['PCA2']+0.02, row['Player Name'], fontsize=9)
+        plt.text(row['PCA1']+0.02, row['PCA2']+0.02, row['Name'], fontsize=9)
     
     plt.title('K-Means Clustering of Players')
     plt.xlabel('PCA Component 1')

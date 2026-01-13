@@ -136,62 +136,64 @@ def main_menu():
             all_players_menu()
         case _:
             option = "Invalid choice"
-     return option
+    return option
 
-    def get_individual_season():
-        year = request.form.get('year')
-        results = sznfile.query.filter_by(year=year).all()
-        return results
+def get_individual_season():
+    year = request.form.get('year')
+    results = sznfile.query.filter_by(year=year).all()
+    return results
     
-    def get_individual_player():
-        name = request.form.get('name')
-        name = name.title()
-        player = sznfile.query.filter_by(name=name).all()
-        return player
+def get_individual_player():
+    name = request.form.get('name')
+    name = name.title()
+    player = sznfile.query.filter_by(name=name).all()
+    return player
 
-    def get_team_season():
-        name = request.form.get('team')
-        year = request.form.get('year')
-        name = name.upper()
-        team = sznfile.query.filter_by(team=name, year=year).all()
-        return team
-    def get_players_list():
-        rawnames = request.form.get('players')
-        players = []
-        for name in rawnames.split(','):
-            name = name.title().strip()
-            players.append(name)
-        player_entries = sznfile.query.filter(sznfile.name.in_(players)).all()
-        return player_entries
-    
-    def get_all_players():
-        player_list = sznfile.quey.all()
-        return player_list
+def get_team_season():
+    name = request.form.get('team')
+    year = request.form.get('year')
+    name = name.upper()
+    team = sznfile.query.filter_by(team=name, year=year).all()
+    return team
 
-    def individual_players_menu():
-        choice = request.form.get('choice')
-        match choice:
-            case "Get Career Stats":
-                option = get_career_stats()
-            case "Get Season Stats":
-                year = request.form.get('year')
-                option = get_player_season_stats(year)
-            case "Get Career Advanced Stats" : 
-                option = get_career_advanced_stats()
-            case _:
-                option = "Invalid choice"
-        return option
-    def get_career_stats():
-        name = request.form.get('name')
-        name = name.title()
-        player = sznfile.query.filter_by(name=name).all()
-        return player
+def get_players_list():
+    rawnames = request.form.get('players')
+    players = []
+    for name in rawnames.split(','):
+        name = name.title().strip()
+        players.append(name)
+    player_entries = sznfile.query.filter(sznfile.name.in_(players)).all()
+    return player_entries
     
-    def get_player_season_stats(year):
-        name = request.form.get('name')
-        name = name.title()
-        results = sznfile.query.filter_by(name=name, year=year).all()
-        return results
+def get_all_players():
+    player_list = sznfile.quey.all()
+    return player_list
+
+def individual_player_menu():
+    choice = request.form.get('choice')
+    match choice:
+        case "Get Career Stats":
+            option = get_career_stats()
+        case "Get Season Stats":
+            year = request.form.get('year')
+            option = get_player_season_stats(year)
+        case "Get Career Advanced Stats" : 
+            option = get_career_advanced_stats()
+        case _:
+            option = "Invalid choice"
+    return option
+
+def get_career_stats():
+    name = request.form.get('name')
+    name = name.title()
+    player = sznfile.query.filter_by(name=name).all()
+    return player
+    
+def get_player_season_stats(year):
+    name = request.form.get('name')
+    name = name.title()
+    results = sznfile.query.filter_by(name=name, year=year).all()
+    return results
 
 
 

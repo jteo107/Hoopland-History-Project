@@ -31,8 +31,9 @@ if __name__ == "__main__":
     upload_files('/Users/Johann/hoophistoryproject/datafiles/HLA_2023_season_stats.csv')
     upload_files('/Users/Johann/hoophistoryproject/datafiles/HLA_2024_season_stats.csv')
 
-    crit = {'Position': None, 'Team': None, 'Rookie': False}
-    season_plot_design(get_full_szn_stats('2010'),crit,'kmeans',0,0,20)
+    ##crit = {'Position': ('PG','GF'), 'Team': None, 'Rookie': False}
+    ##season_plot_design(get_full_szn_stats('2020'),crit,'kmeans',0,0,20)
+    compare_player_szn_stats('Niko Metrovic',2018,'Taog Gib',2009)
 
     
     
